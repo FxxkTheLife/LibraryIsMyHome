@@ -6,6 +6,7 @@ import time
 
 
 def my_seat(cookie):
+    print("请稍候...")
     url = "https://office.chaoxing.com/data/apps/seat/index?mappId=0"
 
     response = get_req(url, cookie)

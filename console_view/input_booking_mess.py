@@ -1,8 +1,13 @@
-import re
-import prettytable
+import json
+from prettytable import PrettyTable
 
 
 def judge_date(date):
+    if date.isdecimal():
+        if int(date) >= 0:
+            return True
+        else:
+            return False
     str = date.split('-')
     if len(str) != 3:
         return False
@@ -40,16 +45,16 @@ def judge_seat(seat):
 
 
 def judge_bookTime(bookTime):
-    str = bookTime.split(':')
-    if len(str) != 2:
+    time_str = bookTime.split(':')
+    if len(time_str) != 2:
         return False
-    if not str[0].isdigit() or not str[1].isdigit():
+    if not time_str[0].isdigit() or not time_str[1].isdigit():
         print("时间格式错误")
         return False
     # if int(str[0]) > 22 or int(str[0]) < 8 or int(str[1]) > 60 or int(str[1]) < 0:
     #     print("时间不能超出范围~")
     #     return False
-    if len(str[1]) != 2:
+    if len(time_str[1]) != 2:
         return False
     return True
 
@@ -66,6 +71,8 @@ def judge_positive_integer(string):
 
 # main fun of input
 def input_booking_mess():
+    with open("./preset/seat.json") as file:
+        seat_preset = json.load(file)
     print("--------------------------------------------")
     print("1东  970     1西  971\n"
           "2东  973     2西  974     2内  972     2外  1868\n"
@@ -77,12 +84,31 @@ def input_booking_mess():
           "8特  979     8老  980     8外  1865\n"
           "9内  981     9考  982     9外  1864")
     print("------------填写必要信息----------------------")
-    date = judge_input("需要预定的日期(2020-00-00的格式)：", judge_date)
-    floorId = judge_input("楼层：", judge_floor)
-    seatId = judge_input("座位：", judge_seat)
-    startTime = judge_input("开始时间：", judge_bookTime)
-    endTime = judge_input("结束时间：", judge_bookTime)
-    daynum = judge_input("预订天数（自动循环往后预订天数，仅一天输入 1）：", judge_positive_integer)
+    date = judge_input("需要预定的日期（格式为 '2020-01-01' 或直接输入向后推的天数，如明天为 1，后天为 2，退出请输 * 号）：", judge_date)
+    choosen_idx = choose_seat_preset(seat_preset)
+    if choosen_idx is None:
+        floorId = judge_input("楼层（退出请输 * 号）：", judge_floor)
+        seatId = judge_input("座位（退出请输 * 号）：", judge_seat)
+        startTime = judge_input("开始时间（退出请输 * 号）：", judge_bookTime)
+        endTime = judge_input("结束时间（退出请输 * 号）：", judge_bookTime)
+        input_str = input("是否保存座位预设？否[N/n] 是[任意键]")
+        if input_str != "N" and input_str != "n":
+            new_preset = {
+                "roomId": floorId,
+                "seatNum": seatId,
+                "startTime": startTime,
+                "endTime": endTime
+            }
+            seat_preset.append(new_preset)
+            with open("./preset/seat.json", "w") as file:
+                json.dump(seat_preset, file)
+    else:
+        choosen_seat = seat_preset[choosen_idx]
+        floorId = choosen_seat["roomId"]
+        seatId = choosen_seat["seatNum"]
+        startTime = choosen_seat["startTime"]
+        endTime = choosen_seat["endTime"]
+    daynum = judge_input("预订天数（自动循环往后预订天数，仅一天输入 1，退出请输 * 号）：", judge_positive_integer)
     print("--------------------------------------")
     return date, floorId, seatId, startTime, endTime, daynum
 
@@ -91,8 +117,29 @@ def judge_input(prompt, judge_function):
     while True:
         input_str = input(prompt)
         if input_str == '*':
-            print("好的,马上退出！")
+            print("好的，马上退出！")
             raise KeyboardInterrupt
         if judge_function(input_str):
             return input_str
-        print("输入格式有误，请重新输入(输入星号'*'退出)")
+        print("输入格式有误，请重新输入")
+
+
+def choose_seat_preset(preset):
+    if len(preset) > 0:
+        while True:
+            print("当前存在座位预设值：")
+            table = PrettyTable(["Choose", "roomId", "seatNum", "startTime", "endTime"])
+            i = 0
+            for i, one in enumerate(preset):
+                table.add_row([str(i + 1), one["roomId"], one["seatNum"], one["startTime"], one["endTime"]])
+            print(table)
+            try:
+                res = int(input("是否使用座位预设值，是则输入序号，否则按 0："))
+            except ValueError:
+                continue
+            else:
+                if res == 0:
+                    return None
+                if 1 <= res <= i + 1:
+                    return res - 1
+    return None
