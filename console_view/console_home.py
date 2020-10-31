@@ -6,11 +6,12 @@ from console_view.input_booking_mess import input_booking_mess
 from console_view.console_login import console_login
 
 import json
+import datetime
 from prettytable import PrettyTable
 
 
 def console_home():
-    with open("./console_view/preset.json") as file:
+    with open("./preset/login.json") as file:
         preset = json.load(file)
     uname, password, idx = console_login(preset)
     cookie, name = start_login(uname, password)
@@ -24,10 +25,10 @@ def console_home():
                 "password": password,
                 "name": name
             }
-            preset["login"].append(new_preset)
+            preset.append(new_preset)
     else:
-        preset["login"][idx]["name"] = name
-    with open("./console_view/preset.json", "w") as file:
+        preset[idx]["name"] = name
+    with open("./preset/login.json", "w") as file:
         json.dump(preset, file)
 
     while True:
@@ -35,7 +36,7 @@ def console_home():
         table.add_row(["0", "退出"])
         table.add_row(["1", "查询已订"])
         table.add_row(["2", "签到"])
-        table.add_row(["3", "签退"])
+        table.add_row(["3", "退座"])
         table.add_row(["4", "订座"])
 
         print(table)
@@ -67,7 +68,7 @@ def sign_seat(cookie):
     seats = my_seat(cookie)
 
     while True:
-        choose = input("选择签到座位：")
+        choose = input("选择签到座位（退出请输 * 号）：")
         if choose == '*':
             return  # 回到主界面
         if choose.isdigit():
@@ -87,7 +88,7 @@ def cancel_seat(cookie):
     seats = my_seat(cookie)
 
     while True:
-        choose = input("选择退签座位（批量退订请加英文逗号 '1, 2, 3' 或使用短横线符号 '3-9'，可混合使用）：")
+        choose = input("选择退座座位（批量退订请加英文逗号分隔间断的序号 '1, 2, 3' 或使用短横线符号连接连续的序号 '3-9'，可混合使用，退出请输 * 号）：")
         if choose == '*':
             return  # 回到主界面
         if choose.isdigit():
@@ -135,9 +136,11 @@ def book_seat(cookie):
         date, roomId, seatNum, startTime, endTime, daynum = input_booking_mess()
     except KeyboardInterrupt:
         return
+    if date.isdecimal():
+        date = (datetime.date.today() + datetime.timedelta(int(date))).strftime("%Y-%m-%d")
     for i in range(0, int(daynum)):
         print("正在预订第 " + str(i+1) + "/" + daynum + " 天")
         start_reserve(roomId, startTime, endTime, date, seatNum, cookie)
         split = date.split("-")
-        day = int(split[2]) + 1
-        date = split[0] + "-" + split[1] + "-" + str(day)
+        date = datetime.date(int(split[0]), int(split[1]), int(split[2])) + datetime.timedelta(1)
+        date = date.strftime("%Y-%m-%d")

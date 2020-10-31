@@ -2,12 +2,12 @@ from prettytable import PrettyTable
 
 
 def console_login(preset):
-    if len(preset["login"]) > 0:
+    if len(preset) > 0:
         while True:
             print("当前存在账号预设值：")
             table = PrettyTable(["Choose", "User", "Name"])
             i = 0
-            for i, one in enumerate(preset["login"]):
+            for i, one in enumerate(preset):
                 table.add_row([str(i + 1), one["uname"], one["name"] if "name" in one.keys() else ""])
             print(table)
             try:
@@ -18,7 +18,7 @@ def console_login(preset):
                 if res == 0:
                     break
                 if 1 <= res <= i + 1:
-                    return preset["login"][res - 1]["uname"], preset["login"][res - 1]["password"], res - 1
+                    return preset[res - 1]["uname"], preset[res - 1]["password"], res - 1
     uname = input("请输入账号：")
     password = input("请输入密码：")
     return uname, password, None
