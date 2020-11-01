@@ -4,13 +4,12 @@
 
 ## Release notes
 
-### The newest version: 0.3 Release note
+The newest version: 0.3.1
 
-[2020-11-01 00:44]
+[2020-11-01 11:49]
 
-- 老版本的 preset 不兼容新版本！
-- 新增座位预设
-- 更方便的座位预约系统
+- 代码结构简洁化
+- 优化细节
 
 More detail: [Release notes](ReleaseNotes.md)
 
@@ -19,5 +18,9 @@ More detail: [Release notes](ReleaseNotes.md)
 Windows 运行 `console_start.bat`
 
 Mac 运行 `console_start.command`
+
+也可自行 `python console_start.py`
+
+运行前请确保 `pip install -r requirements.txt`
 
 iPhone 推荐使用 Pythonista 3, Android 推荐使用 Pydroid

@@ -1,5 +1,5 @@
 import json
-from request import *
+from request.request import *
 
 from prettytable import PrettyTable
 import time
