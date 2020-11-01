@@ -1,5 +1,5 @@
 import requests
-from constant import *
+from request.constant import *
 
 
 # GET request

@@ -1,4 +1,4 @@
-from request import *
+from request.request import *
 
 
 def sign(reserveId, cookie):

@@ -8,12 +8,11 @@ def judge_date(date):
             return True
         else:
             return False
-    str = date.split('-')
-    if len(str) != 3:
+    date_str = date.split('-')
+    if len(date_str) != 3:
         return False
-    if len(str[0]) > 4 or len(str[1]) > 2 or len(str[2]) > 2:
+    if len(date_str[0]) > 4 or len(date_str[1]) > 2 or len(date_str[2]) > 2:
         return False
-    print(str)
     return True
 
 
@@ -85,10 +84,10 @@ def input_booking_mess():
           "9内  981     9考  982     9外  1864")
     print("------------填写必要信息----------------------")
     date = judge_input("需要预定的日期（格式为 '2020-01-01' 或直接输入向后推的天数，如明天为 1，后天为 2，退出请输 * 号）：", judge_date)
-    choosen_idx = choose_seat_preset(seat_preset)
-    if choosen_idx is None:
-        floorId = judge_input("楼层（退出请输 * 号）：", judge_floor)
-        seatId = judge_input("座位（退出请输 * 号）：", judge_seat)
+    chosen_idx = choose_seat_preset(seat_preset)
+    if chosen_idx is None:
+        floorId = judge_input("楼层（根据上述表中输入房间代号，退出请输 * 号）：", judge_floor)
+        seatId = judge_input("座位（输入三位数如 '005'，退出请输 * 号）：", judge_seat)
         startTime = judge_input("开始时间（退出请输 * 号）：", judge_bookTime)
         endTime = judge_input("结束时间（退出请输 * 号）：", judge_bookTime)
         input_str = input("是否保存座位预设？否[N/n] 是[任意键]")
@@ -103,11 +102,11 @@ def input_booking_mess():
             with open("./preset/seat.json", "w") as file:
                 json.dump(seat_preset, file)
     else:
-        choosen_seat = seat_preset[choosen_idx]
-        floorId = choosen_seat["roomId"]
-        seatId = choosen_seat["seatNum"]
-        startTime = choosen_seat["startTime"]
-        endTime = choosen_seat["endTime"]
+        chosen_seat = seat_preset[chosen_idx]
+        floorId = chosen_seat["roomId"]
+        seatId = chosen_seat["seatNum"]
+        startTime = chosen_seat["startTime"]
+        endTime = chosen_seat["endTime"]
     daynum = judge_input("预订天数（自动循环往后预订天数，仅一天输入 1，退出请输 * 号）：", judge_positive_integer)
     print("--------------------------------------")
     return date, floorId, seatId, startTime, endTime, daynum

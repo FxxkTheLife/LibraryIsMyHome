@@ -1,6 +1,6 @@
-from my_seat import my_seat
-from start import start_login, start_reserve
-from sign import sign, sign_back
+from request.my_seat import my_seat
+from request.start import start_login, start_reserve
+from request.sign import sign, sign_back
 
 from console_view.input_booking_mess import input_booking_mess
 from console_view.console_login import console_login
