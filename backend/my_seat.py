@@ -1,13 +1,14 @@
 import json
-from request.request import *
+from backend.request import *
 
 from prettytable import PrettyTable
 import time
 
 
-def my_seat(cookie):
-    print("请稍候...")
-    url = "https://office.chaoxing.com/data/apps/seat/index?mappId=0"
+def my_seat(cookie, is_print=True):
+    if is_print:
+        print("请稍候...")
+    url = "http://office.chaoxing.com/data/apps/seat/index?mappId=0"
 
     response = get_req(url, cookie)
     seats = json.loads(response.text)["data"]["curReserves"]
@@ -18,11 +19,13 @@ def my_seat(cookie):
         res.append({
             "id": str(one_seat["id"]),
             "roomId": str(one_seat["roomId"]),
-            "seatNum": one_seat["seatNum"]
+            "seatNum": one_seat["seatNum"],
+            "status": str(one_seat["status"])
         })
 
         table.add_row([str(i), str(one_seat["id"]), one_seat["firstLevelName"] + one_seat["secondLevelName"] + one_seat["thirdLevelName"], one_seat["seatNum"], str(one_seat["status"]), convert_time(one_seat["startTime"]/1000), convert_time(one_seat["endTime"]/1000)])
-    print(table)
+    if is_print:
+        print(table)
     return res
 
 

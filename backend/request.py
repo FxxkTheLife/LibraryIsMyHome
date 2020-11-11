@@ -1,8 +1,8 @@
 import requests
-from request.constant import *
+from backend.constant import *
 
 
-# GET request
+# GET backend
 def get_req(url, cookie=None):
     headers = {
         "User-Agent": user_agent
@@ -13,7 +13,7 @@ def get_req(url, cookie=None):
     return requests.request("GET", url, headers=headers)
 
 
-# GET request - return cookie, text
+# GET backend - return cookie, text
 def get_req_to_cookie(url, cookie=None):
     response = get_req(url, cookie)
     return response.headers['Set-Cookie'], response.text

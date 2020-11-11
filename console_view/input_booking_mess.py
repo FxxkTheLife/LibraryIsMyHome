@@ -72,6 +72,8 @@ def judge_positive_integer(string):
 def input_booking_mess():
     with open("./preset/seat.json") as file:
         seat_preset = json.load(file)
+    print("------------填写必要信息----------------------")
+    date = judge_input("需要预定的日期（格式为 '2020-01-01' 或直接输入向后推的天数，如明天为 1，后天为 2，退出请输 * 号）：", judge_date)
     print("--------------------------------------------")
     print("1东  970     1西  971\n"
           "2东  973     2西  974     2内  972     2外  1868\n"
@@ -82,8 +84,7 @@ def input_booking_mess():
           "7内  1846\n"
           "8特  979     8老  980     8外  1865\n"
           "9内  981     9考  982     9外  1864")
-    print("------------填写必要信息----------------------")
-    date = judge_input("需要预定的日期（格式为 '2020-01-01' 或直接输入向后推的天数，如明天为 1，后天为 2，退出请输 * 号）：", judge_date)
+    print("--------------------------------------------")
     chosen_idx = choose_seat_preset(seat_preset)
     if chosen_idx is None:
         floorId = judge_input("楼层（根据上述表中输入房间代号，退出请输 * 号）：", judge_floor)
@@ -142,3 +143,20 @@ def choose_seat_preset(preset):
                 if 1 <= res <= i + 1:
                     return res - 1
     return None
+
+
+def input_supervise_message():
+    print("--------------------------------------------")
+    print("1东  970     1西  971\n"
+          "2东  973     2西  974     2内  972     2外  1868\n"
+          "3内  975     3外  1869\n"
+          "4内  976     4外  1867\n"
+          "5内  977     5外  1866\n"
+          "6内  1870    6外  978\n"
+          "7内  1846\n"
+          "8特  979     8老  980     8外  1865\n"
+          "9内  981     9考  982     9外  1864")
+    print("--------------------------------------------")
+    roomId = judge_input("请输入要监督的楼层（根据上述表中输入房间代号，退出请输 * 号）：", judge_floor)
+    seatNum = judge_input("请输入要监督的座位（输入三位数如 '005'，退出请输 * 号）：", judge_seat)
+    return roomId, seatNum

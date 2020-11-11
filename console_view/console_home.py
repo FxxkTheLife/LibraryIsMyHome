@@ -1,12 +1,14 @@
-from request.my_seat import my_seat
-from request.start import start_login, start_reserve
-from request.sign import sign, sign_back
+from backend.my_seat import my_seat
+from backend.start import start_login, start_reserve
+from backend.sign import sign, sign_back
+from backend.supervise import supervise
 
-from console_view.input_booking_mess import input_booking_mess
+from console_view.input_booking_mess import input_booking_mess, input_supervise_message
 from console_view.console_login import console_login
 
 import json
 import datetime
+import time
 from prettytable import PrettyTable
 
 
@@ -38,12 +40,12 @@ def console_home():
         table.add_row(["2", "签到"])
         table.add_row(["3", "退座"])
         table.add_row(["4", "订座"])
+        table.add_row(["5", "监督"])
+        table.add_row(["6", "反监督"])
 
         print(table)
         num = input("选择：")
         if not num.isdigit():
-            continue
-        if int(num) > 4 or int(num) < 0:
             continue
 
         num = int(num)
@@ -57,6 +59,10 @@ def console_home():
             cancel_seat(cookie)
         elif num == 4:
             book_seat(cookie)
+        elif num == 5:
+            supervise_seat(cookie)
+        elif num == 6:
+            anti_supervise(cookie)
 
 
 def show_seats(cookie):
@@ -144,3 +150,35 @@ def book_seat(cookie):
         split = date.split("-")
         date = datetime.date(int(split[0]), int(split[1]), int(split[2])) + datetime.timedelta(1)
         date = date.strftime("%Y-%m-%d")
+
+
+def supervise_seat(cookie):
+    try:
+        roomId, seatNum = input_supervise_message()
+    except KeyboardInterrupt:
+        return
+
+    print(supervise(roomId, seatNum, cookie))
+    input("回车继续")
+
+
+def anti_supervise(cookie):
+    i = 1
+    delay_seconds = 300
+
+    try:
+        input("回车开始运行反监督程序，此程序需一直在后台运行，每隔 " + str(delay_seconds) + " 秒检测一次，[Ctrl-C] 结束")
+        print("反监督中...")
+        while True:
+            res = my_seat(cookie, is_print=False)
+            print("反监督中..." + "，你当前订了 " + str(len(res)) + " 个位置")
+            for one_res in res:
+                if one_res["status"] == "5":
+                    print("检测到监督，正在签到...")
+                    print(sign(one_res["id"], cookie))
+                    print("完成")
+            print("已检测完第 " + str(i) + " 个 " + str(delay_seconds) + " 秒啦，我要休息一下")
+            time.sleep(delay_seconds)
+            i += 1
+    except KeyboardInterrupt:
+        return
