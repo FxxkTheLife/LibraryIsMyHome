@@ -1,5 +1,5 @@
-from request.login import *
-from request.reserve import *
+from backend.login import *
+from backend.reserve import *
 import json
 
 

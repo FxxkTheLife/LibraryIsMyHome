@@ -1,6 +1,6 @@
 import re
 
-from request.request import *
+from backend.request import *
 
 
 def get_seat_token(roomId, day, cookie):

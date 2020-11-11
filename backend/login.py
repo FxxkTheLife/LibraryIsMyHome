@@ -1,7 +1,7 @@
 import re
 
-from request.request import *
-from request.cookie import *
+from backend.request import *
+from backend.cookie import *
 
 
 # login
