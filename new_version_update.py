@@ -52,6 +52,7 @@ def isUpToDate(fileName, url):
 def update(path, url):
     print("正在下载: {}".format(url))
     response = requests.get(url)
+    response.encoding = 'utf-8'
     if response.status_code == 200:
         with open(path, "w") as f:
             f.write(response.text)
