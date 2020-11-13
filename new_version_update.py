@@ -4,7 +4,7 @@ from update_check import checkForUpdates, update
 directory = os.getcwd()
 supported_version = ["0.4"]
 
-remoteBaseURL = "https://cdn.jsdelivr.net/gh/FxxkTheLife/LibraryIsMyHome"
+remoteBaseURL = "http://cdn.jsdelivr.net/gh/FxxkTheLife/LibraryIsMyHome"
 localBaseURL = ""
 
 
@@ -29,5 +29,6 @@ def start_update(version, new_version):
 
     global remoteBaseURL, localBaseURL
     remoteBaseURL += "@" + new_version
+    localBaseURL = os.getcwd()
     update_command()
     print("版本 {} 更新已完成".format(new_version))
