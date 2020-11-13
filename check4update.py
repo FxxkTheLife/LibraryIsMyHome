@@ -16,6 +16,7 @@ def is_version_available(version):
 def get_new_version_update(version, new_version):
     try:
         response = requests.get(remote_url + "@{}/new_version_update.py".format(new_version))
+        response.encoding = 'utf-8'
     except requests.exceptions.ConnectionError:
         print("\033[31m网络错误，请检查网络连接\033[0m")
         raise KeyboardInterrupt
