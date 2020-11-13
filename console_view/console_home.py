@@ -13,6 +13,9 @@ from prettytable import PrettyTable
 
 
 def console_home():
+    print("\033[33m===========================================\033[0m")
+    print("\033[33m----------👋欢迎使用订座专用脚本～～-----------\033[0m")
+
     with open("./preset/login.json") as file:
         preset = json.load(file)
     uname, password, idx = console_login(preset)
