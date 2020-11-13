@@ -1,6 +1,5 @@
 import os
 import requests
-from update_check import checkForUpdates, update
 import ssl
 ssl._create_default_http_context = ssl._create_unverified_context
 
@@ -10,21 +9,14 @@ version_url = "https://raw.githubusercontent.com/FxxkTheLife/LibraryIsMyHome/mai
 remote_url = "https://cdn.jsdelivr.net/gh/FxxkTheLife/LibraryIsMyHome"
 
 
-def check4update(file, url):
-    if os.path.exists(file):
-        checkForUpdates(file, url)
-    else:
-        update(file, url)
-
-
 def is_version_available(version):
-    return requests.get(remote_url + "@" + version + "/README.md").status_code == 200
+    return requests.get(remote_url + "@" + version + "/new_version_update.py").status_code == 200
 
 
 def get_new_version_update(version, new_version):
     try:
         response = requests.get(remote_url + "@{}/new_version_update.py".format(new_version))
-    except ConnectionError:
+    except requests.exceptions.ConnectionError:
         print("\033[31m网络错误，请检查网络连接\033[0m")
         raise KeyboardInterrupt
     if response.status_code == 200:
@@ -66,7 +58,7 @@ def check_version():
             print("\033[34m检查更新中...\033[0m")
             try:
                 response = requests.get(version_url)
-            except ConnectionError:
+            except requests.exceptions.ConnectionError:
                 print("\033[31m网络错误，请检查网络连接\033[0m")
             if response.status_code == 200:
                 new_version = response.text
@@ -92,4 +84,5 @@ if __name__ == '__main__':
         version, new_version = check_version()
         update_all(version, new_version)
     except KeyboardInterrupt:
-        print("已退出")
+        pass
+    print("\033[33m拜拜👋，下次见～\033[0m")

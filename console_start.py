@@ -4,4 +4,5 @@ if __name__ == '__main__':
     try:
         console_home()
     except KeyboardInterrupt:
-        print("正常退出")
+        pass
+    print("\033[33m拜拜👋，下次见～\033[0m")
