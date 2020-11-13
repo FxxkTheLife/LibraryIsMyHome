@@ -1,3 +1,2 @@
 prettytable
 requests
-update_check
