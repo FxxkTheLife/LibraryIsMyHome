@@ -6,6 +6,7 @@ ssl._create_default_http_context = ssl._create_unverified_context
 directory = os.getcwd()
 version_file_path = directory + "/version"
 version_url = "https://raw.githubusercontent.com/FxxkTheLife/LibraryIsMyHome/main/version"
+version_cdn_url = "https://raw.sevencdn.com/FxxkTheLife/LibraryIsMyHome/main/version"
 remote_url = "https://cdn.jsdelivr.net/gh/FxxkTheLife/LibraryIsMyHome"
 
 
@@ -36,9 +37,9 @@ def check_version():
             version = f.read()
             version = version.rstrip("\n")
     while True:
-        input_str = input("由于 GitHub raw 国内被墙，可能无法自动检测更新，是否手动输入版本号[N/n]，或者继续使用自动更新[任意键]")
+        input_str = input("请选择获取版本的方式：\n[任意键] GitHub raw 自动检查(国内被墙，可能无法访问)\n[1] raw.senvencdn.com 自动检查\n[2] 手动输入版本号\n:")
 
-        if input_str == "N" or input_str == "n":  # 手动
+        if input_str == "2":  # 手动
             while True:
                 version_str = input("请输入版本号：")
                 print("\033[34m正在查询版本信息...\033[0m")
@@ -58,7 +59,7 @@ def check_version():
         else:  # 自动
             print("\033[34m检查更新中...\033[0m")
             try:
-                response = requests.get(version_url)
+                response = requests.get(version_cdn_url if input_str == "1" else version_url)
             except requests.exceptions.ConnectionError:
                 print("\033[31m网络错误，请检查网络连接\033[0m")
             if response.status_code == 200:
