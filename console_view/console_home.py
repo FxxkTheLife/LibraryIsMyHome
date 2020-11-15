@@ -9,6 +9,7 @@ from console_view.console_login import console_login
 import json
 import datetime
 import time
+import random
 
 
 def console_home():
@@ -168,7 +169,7 @@ def supervise_seat(cookie):
 
 def anti_supervise(cookie):
     i = 1
-    delay_seconds = 300
+    delay_seconds = 240
 
     try:
         input("回车开始运行反监督程序，此程序需一直在后台运行，每隔 " + str(delay_seconds) + " 秒检测一次，[Ctrl-C] 结束")
@@ -181,7 +182,8 @@ def anti_supervise(cookie):
                     print("检测到监督，正在签到...")
                     print(sign(one_res["id"], cookie))
                     print("完成")
-            print("已检测完第 " + str(i) + " 个 " + str(delay_seconds) + " 秒啦，我要休息一下")
+            delay_seconds = random.randint(180, 280)
+            print("已检测完第 " + str(i) + " 次啦，我要休息 " + str(delay_seconds) + " 秒")
             time.sleep(delay_seconds)
             i += 1
     except KeyboardInterrupt:
