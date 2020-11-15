@@ -1,5 +1,4 @@
 import json
-from prettytable import PrettyTable
 
 
 def judge_date(date):
@@ -128,11 +127,13 @@ def choose_seat_preset(preset):
     if len(preset) > 0:
         while True:
             print("当前存在座位预设值：")
-            table = PrettyTable(["Choose", "roomId", "seatNum", "startTime", "endTime"])
+            print("+{}+{}+{}+{}+{}+".format("-" * 9, "-" * 9, "-" * 9, "-" * 21, "-" * 21))
+            print("|{:^9}|{:^9}|{:^9}|{:^21}|{:^21}|".format("Choose", "roomId", "seatNum", "startTime", "endTime"))
+            print("+{}+{}+{}+{}+{}+".format("-" * 9, "-" * 9, "-" * 9, "-" * 21, "-" * 21))
             i = 0
             for i, one in enumerate(preset):
-                table.add_row([str(i + 1), one["roomId"], one["seatNum"], one["startTime"], one["endTime"]])
-            print(table)
+                print("|{:^9}|{:^9}|{:^9}|{:^21}|{:^21}|".format(str(i + 1), one["roomId"], one["seatNum"], one["startTime"], one["endTime"]))
+            print("+{}+{}+{}+{}+{}+".format("-" * 9, "-" * 9, "-" * 9, "-" * 21, "-" * 21))
             try:
                 res = int(input("是否使用座位预设值，是则输入序号，否则按 0："))
             except ValueError:
