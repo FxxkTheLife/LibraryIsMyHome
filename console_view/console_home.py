@@ -9,7 +9,6 @@ from console_view.console_login import console_login
 import json
 import datetime
 import time
-from prettytable import PrettyTable
 
 
 def console_home():
@@ -37,16 +36,18 @@ def console_home():
         json.dump(preset, file)
 
     while True:
-        table = PrettyTable(["Choose", "Operation"])
-        table.add_row(["0", "退出"])
-        table.add_row(["1", "查询已订"])
-        table.add_row(["2", "签到"])
-        table.add_row(["3", "退座"])
-        table.add_row(["4", "订座"])
-        table.add_row(["5", "监督"])
-        table.add_row(["6", "反监督"])
+        print("+{}+{}+".format("-"*11, "-"*14))
+        print("|{:^11}|{:^14}|".format("Choose", "Operation"))
+        print("+{}+{}+".format("-"*11, "-"*14))
+        print("|{:^11}|{:^13}|".format("0", "退出"))
+        print("|{:^11}|{:^11}|".format("1", "查询已订"))
+        print("|{:^11}|{:^13}|".format("2", "签到"))
+        print("|{:^11}|{:^13}|".format("3", "退座"))
+        print("|{:^11}|{:^13}|".format("4", "订座"))
+        print("|{:^11}|{:^13}|".format("5", "监督"))
+        print("|{:^11}|{:^12}|".format("6", "反监督"))
+        print("+{}+{}+".format("-"*11, "-"*14))
 
-        print(table)
         num = input("选择：")
         if not num.isdigit():
             continue
