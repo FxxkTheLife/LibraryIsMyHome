@@ -2,7 +2,7 @@ import os
 import requests
 import hashlib
 
-supported_version = ["", "0.4"]
+supported_version = ["", "0.4", "0.5"]
 
 remoteBaseURL = "https://cdn.jsdelivr.net/gh/FxxkTheLife/LibraryIsMyHome"
 localBaseURL = "."
@@ -17,6 +17,7 @@ file_must_exist = [("/preset/login.json", "[]"),
 file_to_update = ["/backend/__init__.py",
                   "/backend/constant.py",
                   "/backend/cookie.py",
+                  "/backend/exception.py",
                   "/backend/login.py",
                   "/backend/my_seat.py",
                   "/backend/request.py",
