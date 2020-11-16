@@ -1,5 +1,6 @@
 from backend.login import *
 from backend.reserve import *
+from backend.exception import *
 import json
 
 
@@ -15,6 +16,8 @@ def start_login(uname, password):
 
     # text to json object
     text_json = json.loads(text)
+    if not text_json["status"]:
+        raise LoginException("第一阶段登录错误")
 
     # login get more cookie
     print("2")
@@ -58,4 +61,3 @@ def start(uname, password, roomId, startTime, endTime, day, seatNum):
 
 if __name__ == '__main__':
     start(uname, password, roomId, startTime, endTime, day, seatNum)
-

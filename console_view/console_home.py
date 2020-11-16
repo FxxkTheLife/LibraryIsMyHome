@@ -2,6 +2,7 @@ from backend.my_seat import my_seat
 from backend.start import start_login, start_reserve
 from backend.sign import sign, sign_back
 from backend.supervise import supervise
+from backend.exception import *
 
 from console_view.input_booking_mess import input_booking_mess, input_supervise_message
 from console_view.console_login import console_login
@@ -18,8 +19,16 @@ def console_home():
 
     with open("./preset/login.json") as file:
         preset = json.load(file)
-    uname, password, idx = console_login(preset)
-    cookie, name = start_login(uname, password)
+
+    while True:
+        try:
+            uname, password, idx = console_login(preset)
+            cookie, name = start_login(uname, password)
+        except LoginException as e:
+            print("发生错误：{}".format(e.message))
+        else:
+            break
+
     print("已登录！")
 
     if idx is None:
