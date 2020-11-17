@@ -29,7 +29,7 @@ file_to_update = ["/backend/__init__.py",
                   "/backend/exception.py",
                   "/backend/login.py",
                   "/backend/my_seat.py",
-                  "/backend/preliminary.py"
+                  "/backend/preliminary.py",
                   "/backend/request.py",
                   "/backend/reserve.py",
                   "/backend/sign.py",
@@ -44,7 +44,9 @@ file_to_update = ["/backend/__init__.py",
                   "/console_start.bat",
                   "/requirements.txt",
                   "/version",
-                  "/check4update.py"]
+                  "/check4update.py",
+                  "/check4update.command",
+                  "/check4update.bat"]
 
 
 def isUpToDate(fileName, url):
