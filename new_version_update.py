@@ -53,10 +53,10 @@ file_to_update = ["/backend/__init__.py",
 def isUpToDate(fileName, url):
     with open(fileName, "r") as f:
         file = f.read()
-    hash = hashlib.sha256(file.encode('gb18030')).hexdigest()
+    hash = hashlib.sha256(file.encode('gbk')).hexdigest()
 
     urlcode = requests.get(url).text
-    urlhash = hashlib.sha256(urlcode.encode('gb18030')).hexdigest()
+    urlhash = hashlib.sha256(urlcode.encode('gbk')).hexdigest()
 
     if hash == urlhash:
         return True
@@ -131,6 +131,7 @@ def start_update(version, new_version):
     else:
         print("\033[32m当前版本 {} ====> 更新到版本 {}\033[0m".format(version, new_version))
     input("回车开始更新 >>>")
+    print("\033[34m更新中...\033[0m")
 
     global remoteBaseURL, localBaseURL
     remoteBaseURL += "@" + new_version
