@@ -69,8 +69,10 @@ def update(path, url):
     response = requests.get(url)
     response.encoding = 'utf-8'
     if response.status_code == 200:
-        with open(path, "w") as f:
+        with open(path, "w", encoding="utf-8") as f:
             f.write(response.text)
+    else:
+        print("\033[31m下载遇到错误\033[0m")
 
 
 def checkForUpdates(path, url):
