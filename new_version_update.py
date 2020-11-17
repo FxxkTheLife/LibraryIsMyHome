@@ -53,10 +53,10 @@ file_to_update = ["/backend/__init__.py",
 def isUpToDate(fileName, url):
     with open(fileName, "r") as f:
         file = f.read()
-    hash = hashlib.sha256(file.encode('utf-8')).hexdigest()
+    hash = hashlib.sha256(file.encode('gb18030')).hexdigest()
 
     urlcode = requests.get(url).text
-    urlhash = hashlib.sha256(urlcode.encode('utf-8')).hexdigest()
+    urlhash = hashlib.sha256(urlcode.encode('gb18030')).hexdigest()
 
     if hash == urlhash:
         return True
