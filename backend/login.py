@@ -6,7 +6,7 @@ from backend.cookie import *
 
 # login
 def login(uname, password):
-    url = "http://passport2-api.chaoxing.com/v11/loginregister?code=" + password + "&cx_xxt_passport=json&uname=" + uname + "&loginType=1&roleSelect=true"
+    url = "http://passport2-api.chaoxing.com/v11/loginregister?code={}&cx_xxt_passport=json&uname={}&loginType=1&roleSelect=true".format(password, uname)
 
     return get_req_to_cookie(url)
 
@@ -29,7 +29,7 @@ def get_oauth(cookie=None):
         return cookie_res, token, next_url
 
     def get_oauth_cookie(uid, deptid, token, cookie, next_url):
-        url = "http://office.chaoxing.com/front/user/login/dologin?uid=" + uid + "&deptid=" + deptid + "&token=" + token
+        url = "http://office.chaoxing.com/front/user/login/dologin?uid={}&deptid={}&token={}".format(uid, deptid, token)
 
         cookie_res, text = get_req_to_cookie(url, cookie)
         cookie = merge_cookie(cookie, cookie_res)

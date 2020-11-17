@@ -1,7 +1,9 @@
+from backend.preliminary import detect_integrality
 from console_view.console_home import console_home
 
 if __name__ == '__main__':
     try:
+        detect_integrality()
         console_home()
     except KeyboardInterrupt:
         pass

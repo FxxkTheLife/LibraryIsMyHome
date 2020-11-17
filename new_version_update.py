@@ -2,7 +2,16 @@ import os
 import requests
 import hashlib
 
-supported_version = ["", "0.4", "0.5"]
+supported_version = ["", "0.4", "0.5", "0.5.1"]
+current_version = "0.5.2"
+version_disc = """
+-------------------
+{} 版本更新说明：
+- 更改检查更新脚本
+- 新增预设文件夹判断
+- 更改部分代码缺陷
+-------------------
+""".format(current_version)
 
 remoteBaseURL = "https://cdn.jsdelivr.net/gh/FxxkTheLife/LibraryIsMyHome"
 localBaseURL = "."
@@ -20,6 +29,7 @@ file_to_update = ["/backend/__init__.py",
                   "/backend/exception.py",
                   "/backend/login.py",
                   "/backend/my_seat.py",
+                  "/backend/preliminary.py"
                   "/backend/request.py",
                   "/backend/reserve.py",
                   "/backend/sign.py",
@@ -33,7 +43,8 @@ file_to_update = ["/backend/__init__.py",
                   "/console_start.command",
                   "/console_start.bat",
                   "/requirements.txt",
-                  "/version"]
+                  "/version",
+                  "/check4update.py"]
 
 
 def isUpToDate(fileName, url):
@@ -101,11 +112,26 @@ def update_command():
 
 
 def start_update(version, new_version):
-    if version not in supported_version:
-        print("你当前版本不支持更新版本")
+    print("\033[34m验证中...\033[0m")
+
+    if version == new_version:
+        print("\033[32m你当前版本已是此版本\033[0m")
         return
+    elif version not in supported_version:
+        print("\033[31m更新失败：你当前版本已不支持更新到这个版本\033[0m")
+        return
+
+    print(version_disc)
+
+    if version == "":
+        print("\033[32m下载新版本 {}\033[0m".format(new_version))
+    else:
+        print("\033[32m当前版本 {} ====> 更新到版本 {}\033[0m".format(version, new_version))
+    input("回车开始更新 >>>")
 
     global remoteBaseURL, localBaseURL
     remoteBaseURL += "@" + new_version
     update_command()
     print("\033[32m👏👏🍺恭喜！更新已完成，欢迎使用新版本 {} ~~~\033[0m".format(new_version))
+    print("\033[32m运行当前目录下 console_start.py 即可运行脚本\n"
+          "Windows 用户可运行 console_start.bat 来使用，Mac 用户可运行 console_start.command 来使用\033[0m")

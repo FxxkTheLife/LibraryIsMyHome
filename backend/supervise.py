@@ -3,7 +3,7 @@ import json
 
 
 def supervise(roomId, seatNum, cookie):
-    url = "http://office.chaoxing.com/data/apps/seat/reserve/info?id=" + roomId + "&seatNum=" + seatNum
+    url = "http://office.chaoxing.com/data/apps/seat/reserve/info?id={}&seatNum={}".format(roomId, seatNum)
 
     response = get_req(url, cookie)
 

@@ -51,8 +51,7 @@ def check_version():
                         input("回车退出")
                         raise KeyboardInterrupt
                     else:
-                        print("\033[32m当前版本 {} ====> 更新到版本 {}\033[0m".format(version, new_version))
-                        input("回车开始更新 >>>")
+                        input("回车获取此版本 >>>")
                         return version, new_version
                 print("\033[31m无法获得此版本，请重新输入\033[0m")
 
@@ -70,14 +69,13 @@ def check_version():
                     raise KeyboardInterrupt
                 else:
                     print("\033[32m检查到有最新版本 {}\033[0m".format(new_version))
-                    print("\033[32m当前版本 {} ====> 更新到版本 {}\033[0m".format(version, new_version))
-                    input("回车开始更新 >>>")
+                    input("回车获取此版本 >>>")
                     return version, new_version
             print("\033[31m检查更新失败\033[0m")
 
 
 def update_all(version, new_version):
-    print("\033[34m正在更新到版本 {}...\033[0m".format(new_version))
+    print("\033[34m正在获取版本 {}...\033[0m".format(new_version))
     exec(get_new_version_update(version, new_version), globals())
 
 

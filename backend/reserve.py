@@ -4,7 +4,7 @@ from backend.request import *
 
 
 def get_seat_token(roomId, day, cookie):
-    url = "http://office.chaoxing.com/front/apps/seat/select?id=" + roomId + "&day=" + day + "&backLevel=2"
+    url = "http://office.chaoxing.com/front/apps/seat/select?id={}&day={}&backLevel=2".format(roomId, day)
 
     response = get_req(url, cookie)
     text = response.text
