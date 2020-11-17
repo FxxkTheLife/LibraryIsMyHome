@@ -10,7 +10,7 @@ version_disc = """
 - 更改检查更新脚本
 - 新增预设文件夹判断
 - 更改部分代码缺陷
-- 去除所有 emoji，可能会带来下载错误
+- 去除所有 emoji，可能会带来编码错误
 -------------------
 """.format(current_version)
 
@@ -51,12 +51,12 @@ file_to_update = ["/backend/__init__.py",
 
 
 def isUpToDate(fileName, url):
-    with open(fileName, "r") as f:
+    with open(fileName, "r", encoding="utf-8") as f:
         file = f.read()
-    hash = hashlib.sha256(file.encode('gbk')).hexdigest()
+    hash = hashlib.sha256(file.encode('utf-8')).hexdigest()
 
     urlcode = requests.get(url).text
-    urlhash = hashlib.sha256(urlcode.encode('gbk')).hexdigest()
+    urlhash = hashlib.sha256(urlcode.encode('utf-8')).hexdigest()
 
     if hash == urlhash:
         return True

@@ -11,7 +11,7 @@ The newest version: 0.5.2
 - 更改检查更新脚本
 - 新增预设文件夹判断
 - 更改部分代码缺陷
-- 去除所有 emoji，可能会带来下载错误
+- 去除所有 emoji，可能会带来编码错误
 
 More detail: [Release notes](ReleaseNotes.md)
 
