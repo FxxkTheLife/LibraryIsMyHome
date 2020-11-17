@@ -7,4 +7,4 @@ if __name__ == '__main__':
         console_home()
     except KeyboardInterrupt:
         pass
-    print("\033[33m拜拜👋，下次见～\033[0m")
+    print("\033[33m拜拜，下次见～\033[0m")

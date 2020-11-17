@@ -4,11 +4,14 @@
 
 ## Release notes
 
-The newest version: 0.5
+The newest version: 0.5.2
 
-[2020-11-14 00:38]
+[2020-11-17 23:26]
 
-- 新增"版本更新"，即使在没有任何其他文件的情况下仅靠 `check4update.py` 都能完成更新
+- 更改检查更新脚本
+- 新增预设文件夹判断
+- 更改部分代码缺陷
+- 去除所有 emoji，可能会带来下载错误
 
 More detail: [Release notes](ReleaseNotes.md)
 

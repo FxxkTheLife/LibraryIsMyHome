@@ -85,4 +85,4 @@ if __name__ == '__main__':
         update_all(version, new_version)
     except KeyboardInterrupt:
         pass
-    print("\033[33m拜拜👋，下次见～\033[0m")
+    print("\033[33m拜拜，下次见～\033[0m")

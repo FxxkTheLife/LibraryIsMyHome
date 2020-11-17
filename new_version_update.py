@@ -10,6 +10,7 @@ version_disc = """
 - 更改检查更新脚本
 - 新增预设文件夹判断
 - 更改部分代码缺陷
+- 去除所有 emoji，可能会带来下载错误
 -------------------
 """.format(current_version)
 
@@ -134,6 +135,6 @@ def start_update(version, new_version):
     global remoteBaseURL, localBaseURL
     remoteBaseURL += "@" + new_version
     update_command()
-    print("\033[32m👏👏🍺恭喜！更新已完成，欢迎使用新版本 {} ~~~\033[0m".format(new_version))
+    print("\033[32m恭喜！更新已完成，欢迎使用新版本 {} ~~~\033[0m".format(new_version))
     print("\033[32m运行当前目录下 console_start.py 即可运行脚本\n"
           "Windows 用户可运行 console_start.bat 来使用，Mac 用户可运行 console_start.command 来使用\033[0m")
