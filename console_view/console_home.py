@@ -56,6 +56,7 @@ def console_home():
         print("|{:^11}|{:^13}|".format("4", "订座"))
         print("|{:^11}|{:^13}|".format("5", "监督"))
         print("|{:^11}|{:^12}|".format("6", "反监督"))
+        print("|{:^11}|{:^12}|".format("7", "快速订"))
         print("+{}+{}+".format("-"*11, "-"*14))
 
         num = input("选择：")
@@ -77,6 +78,8 @@ def console_home():
             supervise_seat(cookie)
         elif num == 6:
             anti_supervise(cookie)
+        elif num == 7:
+            book_seat_fast(cookie)
 
 
 def show_seats(cookie):
@@ -197,3 +200,39 @@ def anti_supervise(cookie):
             i += 1
     except KeyboardInterrupt:
         return
+
+
+def book_seat_fast(cookie):
+    try:
+        date, roomId, seatNum, startTime, endTime, daynum = input_booking_mess()
+    except KeyboardInterrupt:
+        return
+    if date.isdecimal():
+        date = (datetime.date.today() + datetime.timedelta(int('1'))).strftime("%Y-%m-%d")
+    print('安静地等待时间的到来......')
+    
+    #等待时间的到来
+    while True:
+        hour=time.localtime().tm_hour
+        if hour == 17:
+            time.sleep(1.5)#时间到了时延迟
+            print('时间到，开始！！')
+            break
+        time.sleep(0.04)
+    i=0
+    while i<3:
+        print("正在进行第 " + str(i+1) + " " + " 次尝试")
+        print('***********************************')
+        result=start_reserve(roomId, startTime, endTime, date, seatNum, cookie)
+        print(result)
+        if(result.__contains__("true")):
+            print("定好了")
+            print('***********************************')
+            break
+        if(result.__contains__("false")):
+            print("失败")
+            #continue
+        time.sleep(0.2)
+        i+=1
+        print('***********************************\n\n\n\n')
+        
