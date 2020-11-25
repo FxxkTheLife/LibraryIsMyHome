@@ -255,11 +255,11 @@ def book_seat_shortcut(cookie):
     #等待时间的到来
     while True:
         hour=time.localtime().tm_hour
-        if hour == 2:
-            time.sleep(1.5)#时间到了时延迟
+        if hour == 17:
+            time.sleep(1)#时间到了时延迟
             print('时间到，开始！！')
             break
-        time.sleep(0.04)
+        time.sleep(0.03)
     i=0
     flag=1 #失败标志位 1:成功 0：失败
     while i<3:

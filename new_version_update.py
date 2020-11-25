@@ -2,8 +2,8 @@ import os
 import requests
 import hashlib
 
-supported_version = ["", "0.4", "0.5", "0.5.1", "0.5.2"]
-current_version = "0.5.3"
+supported_version = ["", "0.4", "0.5", "0.5.1", "0.5.2","0.5.3"]
+current_version = "0.5.4"
 version_disc = """
 -------------------
 {} 版本更新说明：
@@ -12,6 +12,8 @@ version_disc = """
 - 更改部分代码缺陷
 - 去除所有 emoji，可能会带来编码错误
 - 增加功能（快速订）
+- 增加功能（预设时间片)  <-----新
+- 增加功能（一键订所有时间片）<------新
 -------------------
 """.format(current_version)
 
