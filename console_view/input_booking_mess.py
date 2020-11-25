@@ -1,5 +1,5 @@
 import json
-
+import datetime
 
 def judge_date(date):
     if date.isdecimal():
@@ -161,3 +161,118 @@ def input_supervise_message():
     roomId = judge_input("请输入要监督的楼层（根据上述表中输入房间代号，退出请输 * 号）：", judge_floor)
     seatNum = judge_input("请输入要监督的座位（输入三位数如 '005'，退出请输 * 号）：", judge_seat)
     return roomId, seatNum
+
+
+def choose_time_slice():
+    choose = input("输入序号（可以选单个，也可以写0-4这种形式，不能超过4小时！！输入*退出程序），选择时段：")
+    if choose == "*":
+        raise KeyboardInterrupt
+    choose_num=[]#存储最终选了的哪些序号
+    if choose.isdigit():
+        num = int(choose)
+        if num < 0 or num >14:
+            print("时间序号越界")
+            return
+        choose_num.append()
+    else :
+        chooses=choose.split("-")
+        
+        for str_num in chooses:
+            if not str_num.isdigit():
+                print("输入序号不正确")
+                return
+            choose_num.append(int(str_num))
+        print(choose_num)
+
+        for num in choose_num:
+            if num < 0 or num >14:
+                print("时间序号越界")
+                return
+        if len(choose_num)!=2:
+            print("输入不正确")
+            return
+        return choose_num
+
+def input_one_seat_info():
+    with open("./preset/time-slice.json") as file:
+        time_slices = json.load(file)
+    print("------------填写必要信息----------------------")
+    print("--------------------------------------------")
+    print("1东  970     1西  971\n"
+          "2东  973     2西  974     2内  972     2外  1868\n"
+          "3内  975     3外  1869\n"
+          "4内  976     4外  1867\n"
+          "5内  977     5外  1866\n"
+          "6内  1870    6外  978\n"
+          "7内  1846\n"
+          "8特  979     8老  980     8外  1865\n"
+          "9内  981     9考  982     9外  1864")
+    print("--------------------------------------------")
+    for one_slice in time_slices:
+        print(one_slice)
+    print("--------------------------------------------")
+    print("先设定座位，再选择时段")
+    floorId = judge_input("楼层（根据上述表中输入房间代号，退出请输 * 号）：", judge_floor)
+    seatId = judge_input("座位（输入三位数如 '005'，退出请输 * 号）：", judge_seat)
+    
+    print("+{}+{}+{}+{}+".format("-" * 9, "-" * 9, "-" * 9, "-" * 10))   
+    print("|{} {} {} {}|".format("    0    " , "  7:00  ", "   ---   ", "   8:00    "))   
+    print("|{} {} {} {}|".format("    1    " , "  8:00  ", "   ---   ", "   9:00    "))
+    print("|{} {} {} {}|".format("    2    " , "  9:00  ", "   ---   ", "   10:00   "))
+    print("|{} {} {} {}|".format("    3    " , "  10:00  ", "  ---   ", "   11:00   "))
+    print("|{} {} {} {}|".format("    4    " , "  11:00  ", "  ---   ", "   12:00   "))
+    print("|{} {} {} {}|".format("    5    " , "  12:00  ", "  ---   ", "   13:00   "))
+    print("|{} {} {} {}|".format("    6    " , "  13:00  ", "  ---   ", "   14:00   "))
+    print("|{} {} {} {}|".format("    7    " , "  14:00  ", "  ---   ", "   15:00   "))
+    print("|{} {} {} {}|".format("    8    " , "  15:00  ", "  ---   ", "   16:00   "))
+    print("|{} {} {} {}|".format("    9    " , "  16:00  ", "  ---   ", "   17:00   "))
+    print("|{} {} {} {}|".format("    10    " , " 17:00  ", "  ---   ", "   18:00   "))
+    print("|{} {} {} {}|".format("    11    " , " 18:00  ", "  ---   ", "   19:00   "))
+    print("|{} {} {} {}|".format("    12    " , " 19:00  ", "  ---   ", "   20:00   "))
+    print("|{} {} {} {}|".format("    13    " , " 20:00  ", "  ---   ", "   21:00   "))
+    print("|{} {} {} {}|".format("    14    " , " 21:00  ", "  ---   ", "   22:00   "))
+    print("+{}+{}+{}+{}+".format("-" * 9, "-" * 9, "-" * 9, "-" * 10))
+
+    choose_nums= choose_time_slice()
+    while choose_nums is None:
+        choose_nums= choose_time_slice()
+    startTimes = ["7:00","8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00"]
+    endTimes = ["8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"]
+    i=choose_nums[0]
+    while i <= choose_nums[1]:
+        new_preset = {
+        "roomId": floorId,
+        "seatNum": seatId,
+        "startTime": startTimes[i],
+        "endTime": endTimes[i]
+        }
+        time_slices.append(new_preset)
+        with open("./preset/time-slice.json", "w") as file:
+            json.dump(time_slices, file)
+        i+=1
+
+def input_booking_shortcut_mess():
+    with open("./preset/time-slice.json") as file:
+        time_slices = json.load(file)
+    #date = (datetime.date.today() + datetime.timedelta(int('1'))).strftime("%Y-%m-%d")#第二天
+    date = (datetime.date.today()).strftime("%Y-%m-%d") #第一天
+    slices =[]
+    for chosen_slice in time_slices:
+        floorId = chosen_slice["roomId"]
+        seatId = chosen_slice["seatNum"]
+        startTime = chosen_slice["startTime"]
+        endTime = chosen_slice["endTime"]
+        
+        one_time_slice = []
+        one_time_slice.append(date)
+        one_time_slice.append(floorId)
+        one_time_slice.append(seatId)
+        one_time_slice.append(startTime)
+        one_time_slice.append(endTime)
+
+        slices.append(one_time_slice)
+        #print(chosen_slice)
+    print("----------Get:" + date + "-------------------")
+    return slices
+
+

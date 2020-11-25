@@ -4,7 +4,7 @@ from backend.sign import sign, sign_back
 from backend.supervise import supervise
 from backend.exception import *
 
-from console_view.input_booking_mess import input_booking_mess, input_supervise_message
+from console_view.input_booking_mess import input_booking_mess, input_supervise_message,input_booking_shortcut_mess,input_one_seat_info
 from console_view.console_login import console_login
 
 import json
@@ -57,6 +57,8 @@ def console_home():
         print("|{:^11}|{:^13}|".format("5", "监督"))
         print("|{:^11}|{:^12}|".format("6", "反监督"))
         print("|{:^11}|{:^12}|".format("7", "快速订"))
+        print("|{:^11}|{:^12}|".format("8", "存时段"))
+        print("|{:^11}|{:^12}|".format("9", "一键订"))
         print("+{}+{}+".format("-"*11, "-"*14))
 
         num = input("选择：")
@@ -80,7 +82,10 @@ def console_home():
             anti_supervise(cookie)
         elif num == 7:
             book_seat_fast(cookie)
-
+        elif num == 8:
+            save_time_slice()
+        elif num == 9:
+            book_seat_shortcut(cookie)
 
 def show_seats(cookie):
     my_seat(cookie)
@@ -235,4 +240,53 @@ def book_seat_fast(cookie):
         time.sleep(0.2)
         i+=1
         print('***********************************\n\n\n\n')
+
+def save_time_slice():
+    input_one_seat_info()
+
+def book_seat_shortcut(cookie):
+    try:
+        slices = input_booking_shortcut_mess()
+    except KeyboardInterrupt:
+        return
+    
+    print('安静地等待时间的到来......')
+    
+    #等待时间的到来
+    while True:
+        hour=time.localtime().tm_hour
+        if hour == 2:
+            time.sleep(1.5)#时间到了时延迟
+            print('时间到，开始！！')
+            break
+        time.sleep(0.04)
+    i=0
+    flag=1 #失败标志位 1:成功 0：失败
+    while i<3:
+        print("正在进行第 " + str(i+1) + " " + " 次尝试")
+        print('********************************************')
         
+        for one_time_slice in slices:
+            print('-------------------')
+            date = one_time_slice[0]
+            roomId = one_time_slice[1]
+            seatNum = one_time_slice[2]
+            startTime = one_time_slice[3]
+            endTime = one_time_slice[4]
+            result=start_reserve(roomId, startTime, endTime, date, seatNum, cookie)
+            
+            if(result.__contains__("true")):
+                print("定好一片")
+                print('-------------------')
+            if(result.__contains__("false")):
+                print("失败一片")
+                flag=0
+                print('-------------------')
+                #continue
+            time.sleep(0.1)
+        #成功了，跳出
+        if flag == 1:
+            print("订好了~")
+            break
+        i+=1
+        print('*******************************************\n\n\n\n')
