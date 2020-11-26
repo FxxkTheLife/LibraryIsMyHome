@@ -194,6 +194,11 @@ def choose_time_slice():
         return choose_num
 
 def input_one_seat_info():
+    if not os.path.exists("./preset/time-slice.json"):
+        fp = open("./preset/time-slice.json",'w')
+        fp.write("[]")
+        fp.close()
+
     with open("./preset/time-slice.json") as file:
         time_slices = json.load(file)
     print("------------填写必要信息----------------------")
@@ -252,6 +257,11 @@ def input_one_seat_info():
         i+=1
 
 def input_booking_shortcut_mess():
+    if not os.path.exists("./preset/time-slice.json"):
+        fp = open("./preset/time-slice.json",'w')
+        fp.write("[]")
+        fp.close()
+    
     with open("./preset/time-slice.json") as file:
         time_slices = json.load(file)
     date = (datetime.date.today() + datetime.timedelta(int('1'))).strftime("%Y-%m-%d")#第二天
