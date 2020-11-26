@@ -1,6 +1,6 @@
 import json
 import datetime
-import os
+
 def judge_date(date):
     if date.isdecimal():
         if int(date) >= 0:
@@ -193,14 +193,7 @@ def choose_time_slice():
             return
         return choose_num
 
-# add a one-seat info
 def input_one_seat_info():
-    if not os.path.exists("./preset/time-slice.json"):
-        print('新建json文件成功')
-        fp = open("./preset/time-slice.json","w")
-        fp.write("[]")
-        fp.close()
-
     with open("./preset/time-slice.json") as file:
         time_slices = json.load(file)
     print("------------填写必要信息----------------------")
@@ -259,12 +252,6 @@ def input_one_seat_info():
         i+=1
 
 def input_booking_shortcut_mess():
-    if not os.path.exists("./preset/time-slice.json"):
-        print('新建json文件成功')
-        fp = open("./preset/time-slice.json","w")
-        fp.write("[]")
-        fp.close()
-
     with open("./preset/time-slice.json") as file:
         time_slices = json.load(file)
     date = (datetime.date.today() + datetime.timedelta(int('1'))).strftime("%Y-%m-%d")#第二天
