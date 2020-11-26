@@ -2,8 +2,8 @@ import os
 import requests
 import hashlib
 
-supported_version = ["", "0.4", "0.5", "0.5.1", "0.5.2","0.5.3"]
-current_version = "0.5.4"
+supported_version = ["", "0.4", "0.5", "0.5.1", "0.5.2","0.5.3","0.5.4"]
+current_version = "0.5.4(1)"
 version_disc = """
 -------------------
 {} 版本更新说明：
