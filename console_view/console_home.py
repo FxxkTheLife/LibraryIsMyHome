@@ -223,9 +223,9 @@ def book_seat_fast(cookie):
             time.sleep(2)#时间到了时延迟
             print('时间到，开始！！')
             break
-        time.sleep(0.04)
+        time.sleep(0.02)
     i=0
-    while i<3:
+    while i<40:
         print("正在进行第 " + str(i+1) + " " + " 次尝试")
         print('***********************************')
         result=start_reserve(roomId, startTime, endTime, date, seatNum, cookie)
@@ -256,13 +256,13 @@ def book_seat_shortcut(cookie):
     while True:
         hour=time.localtime().tm_hour
         if hour == 17:
-            time.sleep(1)#时间到了时延迟
+            time.sleep(1.5)#时间到了时延迟
             print('时间到，开始！！')
             break
         time.sleep(0.03)
     i=0
     flag=1 #失败标志位 1:成功 0：失败
-    while i<20:
+    while i<40:
         print("正在进行第 " + str(i+1) + " " + " 次尝试")
         print('********************************************')
         
