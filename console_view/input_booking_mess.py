@@ -164,7 +164,7 @@ def input_supervise_message():
 
 
 def choose_time_slice():
-    choose = input("输入序号（可以选单个，也可以写0-4这种形式，不能超过4小时！！输入*退出程序），选择时段：")
+    choose = input("输入序号（可以选单个，也可以写0-4这种形式。输入*退出程序），选择时段：")
     if choose == "*":
         raise KeyboardInterrupt
     choose_num=[]#存储最终选了的哪些序号
