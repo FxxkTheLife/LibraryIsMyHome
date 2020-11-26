@@ -254,8 +254,8 @@ def input_one_seat_info():
 def input_booking_shortcut_mess():
     with open("./preset/time-slice.json") as file:
         time_slices = json.load(file)
-    #date = (datetime.date.today() + datetime.timedelta(int('1'))).strftime("%Y-%m-%d")#第二天
-    date = (datetime.date.today()).strftime("%Y-%m-%d") #第一天
+    date = (datetime.date.today() + datetime.timedelta(int('1'))).strftime("%Y-%m-%d")#第二天
+    #date = (datetime.date.today()).strftime("%Y-%m-%d") #第一天
     slices =[]
     for chosen_slice in time_slices:
         floorId = chosen_slice["roomId"]
