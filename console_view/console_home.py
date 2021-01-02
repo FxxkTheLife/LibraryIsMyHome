@@ -59,6 +59,7 @@ def console_home():
         print("|{:^11}|{:^12}|".format("7", "快速订"))
         print("|{:^11}|{:^12}|".format("8", "存时段"))
         print("|{:^11}|{:^12}|".format("9", "一键订"))
+        print("|{:^11}|{:^12}|".format("10", "自动订"))
         print("+{}+{}+".format("-"*11, "-"*14))
 
         num = input("选择：")
@@ -86,6 +87,9 @@ def console_home():
             save_time_slice()
         elif num == 9:
             book_seat_shortcut(cookie)
+        elif num == 10:
+            auto_booking()
+
 
 def show_seats(cookie):
     my_seat(cookie)
@@ -241,8 +245,10 @@ def book_seat_fast(cookie):
         i+=1
         print('***********************************\n\n\n\n')
 
+
 def save_time_slice():
     input_one_seat_info()
+
 
 def book_seat_shortcut(cookie):
     try:
@@ -260,6 +266,49 @@ def book_seat_shortcut(cookie):
             print('时间到，开始！！')
             break
         time.sleep(0.03)
+    do_booking_slices(slices,cookie)
+
+
+def auto_booking():
+    try:
+        slices = input_booking_shortcut_mess()
+    except KeyboardInterrupt:
+        return
+
+    with open("./preset/login.json") as file:
+        preset = json.load(file)
+    uname, password, idx = console_login(preset)
+
+    print('等待16:58自动登录（请确保已经使用功能8选择好时间段，并且网络通畅）')
+    while True:
+        hour = time.localtime().tm_hour
+        minute = time.localtime().tm_min
+        if hour == 16 and minute == 58:
+            print('预备，登录······')
+            break
+        time.sleep(0.03)
+
+    while True:
+        try:
+            cookie, name = start_login(uname, password)
+        except LoginException as e:
+            print("发生错误：{}".format(e.message))
+        else:
+            break
+    print("已登录！")
+
+    print('等待17:00自动订')
+    while True:
+        hour=time.localtime().tm_hour
+        if hour == 17:
+            time.sleep(1.5)#时间到了时延迟
+            print('时间到，开始！！')
+            break
+        time.sleep(0.03)
+    do_booking_slices(slices,cookie)
+
+
+def do_booking_slices(slices,cookie):
     i=0
     flag=1 #失败标志位 1:成功 0：失败
     while i<40:

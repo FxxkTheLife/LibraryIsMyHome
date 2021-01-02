@@ -193,6 +193,7 @@ def choose_time_slice():
             return
         return choose_num
 
+
 def input_one_seat_info():
     if not os.path.exists("./preset/time-slice.json"):
         fp = open("./preset/time-slice.json",'w')
@@ -251,10 +252,34 @@ def input_one_seat_info():
         "startTime": startTimes[i],
         "endTime": endTimes[i]
         }
-        time_slices.append(new_preset)
+        #未有 slice 则添加
+        if not is_has_slice(new_preset):
+            time_slices.append(new_preset)
         with open("./preset/time-slice.json", "w") as file:
             json.dump(time_slices, file)
         i+=1
+    with open("./preset/time-slice.json") as file:
+        time_slices = json.load(file)
+    for one_slice in time_slices:
+        print(one_slice)
+
+
+def is_has_slice(one_slice)->bool:
+    if not os.path.exists("./preset/time-slice.json"):
+        fp = open("./preset/time-slice.json",'w')
+        fp.write("[]")
+        fp.close()
+    with open("./preset/time-slice.json") as file:
+        time_slices = json.load(file)
+    slice_set=[]
+    for time_slice in time_slices:
+        slice_set.append(time_slice)
+    # print(slice_set)
+    if one_slice in slice_set:
+        return True
+    else:
+        return False
+
 
 def input_booking_shortcut_mess():
     if not os.path.exists("./preset/time-slice.json"):
