@@ -2,14 +2,12 @@ import os
 import requests
 import hashlib
 
-supported_version = ["", "0.4", "0.5", "0.5.1", "0.5.2","0.5.3","0.5.4","0.5.5","0.5.6"]
-current_version = "0.5.7"
+supported_version = ["", "0.4", "0.5", "0.5.1", "0.5.2", "0.5.3", "0.5.4", "0.5.5", "0.5.6", "0.5.7"]
+current_version = "0.5.8"
 version_disc = """
 -------------------
 {} 版本更新说明：
-- 功能 8 和功能 9 微小修改
-- 自动添加 time-slice.json 到 preset
-- 升级到0.5.6
+- 修复了异常。
 -------------------
 """.format(current_version)
 

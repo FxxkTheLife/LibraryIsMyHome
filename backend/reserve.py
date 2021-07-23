@@ -8,7 +8,7 @@ def get_seat_token(roomId, day, cookie):
     page_res = get_req(url_page, cookie)  # request 'url_page' to get the pageToken, it's in the page_res.text
 
     page_token_match = re.search('&pageToken=\' \+ \'[A-Za-z0-9]*\'', page_res.text)  # find it's index
-    page_token = page_res.text[page_token_match.span()[0]: page_token_match.span()[1]].split("'")[2]  
+    page_token = page_res.text[page_token_match.span()[0]: page_token_match.span()[1]].split("'")[2]
 
     url = "http://office.chaoxing.com/front/apps/seat/select?id={}&day={}&backLevel=2&pageToken={}".format(roomId, day, page_token)
 
